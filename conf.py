@@ -40,8 +40,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Dash'
-copyright = u'2020, Dash Core Group, Inc'
+project = u'Genix'
+copyright = u'2020, Genix Core Group, Inc'
 author = u'strophy'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -145,7 +145,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Dashdoc'
+htmlhelp_basename = 'Genixdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -172,7 +172,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Dash.tex', u'Dash Documentation',
+    (master_doc, 'Genix.tex', u'Genix Documentation',
      u'strophy', 'manual'),
 ]
 
@@ -182,7 +182,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'dash', u'Dash Documentation',
+    (master_doc, 'genix', u'Genix Documentation',
      [author], 1)
 ]
 
@@ -193,8 +193,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Dash', u'Dash Documentation',
-     author, 'Dash', 'A revolutionary digital money system, Dash is Digital Cash',
+    (master_doc, 'Genix', u'Genix Documentation',
+     author, 'Genix', 'A cryptocurrency dedicated to reforestation.',
      'Miscellaneous'),
 ]
 
