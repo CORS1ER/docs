@@ -6,7 +6,7 @@
 Genix Documentation
 ==================
 
-Genix Docs are currently under construction we currently only support masternode set up documentation. :ref:`Setup <masternode-setup>`
+Genix Docs are currently under construction we currently only support masternode set up documentation. :ref:`Setup <https://genixdocs.readthedocs.io/en/latest/masternodes/setup.html>`
 
 .. .. image:: img/dash_logo.png
 ..    :width: 60 %
@@ -80,13 +80,13 @@ Genix Docs are currently under construction we currently only support masternode
 
 .. _network-docs:
 
-.. .. toctree::
-..    :maxdepth: 3
-..    :caption: Network
+.. toctree::
+   :maxdepth: 3
+   :caption: Network
 
-..    .. governance/index.rst
-..    masternodes/index
-..    .. mining/index
-..    .. developers/index
-..    .. marketing.rst
-..    .. legal.rst
+   .. governance/index.rst
+   masternodes/index
+   .. mining/index
+   .. developers/index
+   .. marketing.rst
+   .. legal.rst
