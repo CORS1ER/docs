@@ -319,11 +319,11 @@ since this will be the only way you can access our funds if anything
 happens to your computer. For more details on these steps, see
 :ref:`here <Genixcore-backup>`.
 
-Now send exactly 1000 Genix in a single transaction to the new address
+Now send exactly 100,000 GENIX in a single transaction to the new address
 you generated in the previous step. This may be sent from another
 wallet, or from funds already held in your current wallet. Once the
 transaction is complete, view the transaction in a `blockchain explorer
-<https://insight.Genix.org/insight/>`_ by searching for the address. You
+<https://explorer.genix.cx/>`_ by searching for the address. You
 will need 15 confirmations before you can register the masternode, but
 you can continue with the next step at this point already: generating
 your masternode operator key.
@@ -335,65 +335,42 @@ your masternode operator key.
    transfer
 
 
-.. _masternode-setup-install-Genixcore:
+.. _masternode-setup-install-genixcore:
 
 Install Genix Core
 =================
 
 Genix Core is the software behind both the Genix Core GUI wallet and Genix
 masternodes. If not displaying a GUI, it runs as a daemon on your VPS
-(Genixd), controlled by a simple command interface (Genix-cli).
+(genixd), controlled by a simple command interface (genix-cli).
 
 Open PuTTY or a console again and connect using the username and
-password you just created for your new, non-root user. The following
-options are available for installing a Genix masternode:
+password you just created for your new, non-root user.
 
-- Manual installation (this guide)
-- `xkcd's installation guide <https://www.Genix.org/forum/threads/system-wide-masternode-setup-with-systemd-auto-re-start-rfc.39460/>`__
-- `Genixman installation <https://docs.Genix.org/en/0.15.0/masternodes/setup.html#option-1-automated-installation-using-Genixman>`__ (deprecated)
-- `mn-bootstrap installation <https://docs.Genix.org/en/mn-bootstrap/masternodes/setup.html#install-mn-bootstrap>`__ (beta version, currently testnet only)
-
-Manual installation
+Genix Core installation
 -----------------------------
 
 To manually download and install the components of your Genix masternode,
-visit the `GitHub releases page <https://github.com/Genixpay/Genix/releases>`_ 
+visit the `GitHub releases page <https://github.com/genix-project/genix/releases>`_ 
 and copy the link to the latest ``x86_64-linux-gnu`` version. Go back to
 your terminal window and enter the following command, pasting in the
 address to the latest version of Genix Core by right clicking or pressing
 **Ctrl + V**::
 
   cd /tmp
-  wget https://github.com/Genixpay/Genix/releases/download/v0.16.1.1/Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz
-
-Verify the authenticity of your download by checking its detached
-signature against the public key published by the Genix Core development
-team. All releases of Genix are signed using GPG with one of the
-following keys:
-
-- Alexander Block (codablock) with the key ``63A9 6B40 6102 E091``,
-  `verifiable here on Keybase <https://keybase.io/codablock>`__
-- Pasta (pasta) with the key ``5252 7BED ABE8 7984``, `verifiable here
-  on Keybase <https://keybase.io/pasta>`__
-
-::
-
-  curl https://keybase.io/codablock/pgp_keys.asc | gpg --import
-  curl https://keybase.io/pasta/pgp_keys.asc | gpg --import
-  wget https://github.com/Genixpay/Genix/releases/download/v0.16.1.1/Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz.asc
-  gpg --verify Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz.asc
+  wget PUTLINKHERE TODO
 
 Create a working directory for Genix, extract the compressed archive and
 copy the necessary files to the directory::
 
-  mkdir ~/.Genixcore
-  tar xfv Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz
-  cp -f Genixcore-0.16.1/bin/Genixd ~/.Genixcore/
-  cp -f Genixcore-0.16.1/bin/Genix-cli ~/.Genixcore/
+  mkdir ~/.genixcore
+  tar xfv Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz TODO
+  cp -f Genixcore-0.16.1/bin/Genixd ~/.genixcore/ TODO
+  cp -f Genixcore-0.16.1/bin/Genix-cli ~/.genixcore/ TODO
 
 Create a configuration file using the following command::
 
-  nano ~/.Genixcore/Genix.conf
+  nano ~/.genixcore/genix.conf
 
 An editor window will appear. We now need to create a configuration file
 specifying several variables. Copy and paste the following text to get
@@ -427,45 +404,22 @@ result should look something like this:
 .. figure:: img/setup-manual-conf.png
    :width: 400px
 
-   Entering key data in Genix.conf on the masternode
+   Entering key data in genix.conf on the masternode
 
 Press **Ctrl + X** to close the editor and **Y** and **Enter** save the
 file. You can now start running Genix on the masternode to begin
 synchronization with the blockchain::
 
-  ~/.Genixcore/Genixd
+  ~/.genixcore/genixd
 
-You will see a message reading **Genix Core server starting**. We will
-now install Sentinel, a piece of software which operates as a watchdog
-to communicate to the network that your node is working properly::
+You will see a message reading **Genix Core server starting**. 
 
-  cd ~/.Genixcore
-  git clone https://github.com/Genixpay/sentinel.git
-  cd sentinel
-  virtualenv venv
-  venv/bin/pip install -r requirements.txt
-  venv/bin/python bin/sentinel.py
-
-You will see a message reading **Genixd not synced with network! Awaiting
-full sync before running Sentinel.** Add Genixd and sentinel to crontab
-to make sure it runs every minute to check on your masternode::
-
-  crontab -e
-
-Choose nano as your editor and enter the following lines at the end of
-the file::
-
-  * * * * * cd ~/.Genixcore/sentinel && ./venv/bin/python bin/sentinel.py 2>&1 >> sentinel-cron.log
-  * * * * * pidof Genixd || ~/.Genixcore/Genixd
-
-Press enter to make sure there is a blank line at the end of the file,
-then press **Ctrl + X** to close the editor and **Y** and **Enter** save
-the file. We now need to wait for 15 confirmations of the collateral
+We now need to wait for 15 confirmations of the collateral
 transaction to complete, and wait for the blockchain to finish
 synchronizing on the masternode. You can use the following commands to
 monitor progress::
 
-  ~/.Genixcore/Genix-cli mnsync status
+  ~/.genixcore/genix-cli mnsync status
 
 When synchronisation is complete, you should see the following
 response::
@@ -494,81 +448,7 @@ operated. These changes and the three keys required for the different
 masternode roles are described briefly under :ref:`dip3-changes` in this
 documentation.
 
-
-Option 1: Registering from a hardware wallet
---------------------------------------------
-
-Go back to DMT and ensure that all fields from the previous step are
-still filled out correctly.  Click **Generate new** for the three
-private keys required for a DIP003 deterministic masternode:
-
-- Owner private key
-- Operator private key
-- Voting private key
-
-.. figure:: img/setup-dmt-full.png
-   :width: 220px
-
-   Genix Masternode Tool ready to register a new masternode
-
-Then click **Register masternode**. Optionally specify a different
-**Payout address** and/or **Operator reward**, then click **Continue**.
-Select **Remote Genix RPC Node (automatic method)**. (See `here <https://github.com/Bertrand256/Genix-masternode-tool/blob/master/doc/config-connection-direct.md>`__ 
-for documentation on using your own local RPC node.) and confirm the
-following two messages:
-
-.. image:: img/setup-dmt-send.png
-   :width: 220px
-
-.. figure:: img/setup-dmt-sent.png
-   :width: 220px
-
-   Genix Masternode Tool confirmation dialogs to register a masternode
-
-The BLS private key must be entered in the ``Genix.conf`` file on the
-masternode. This allows the masternode to watch the blockchain for
-relevant Pro*Tx transactions, and will cause it to start serving as a
-masternode when the signed ProRegTx is broadcast by the owner, as we
-just did above. Log in to your masternode using ``ssh`` or PuTTY and
-edit the configuration file as follows::
-
-  nano ~/.Genixcore/Genix.conf
-
-The editor appears with the existing masternode configuration. Add or
-uncomment this lines in the file, replacing the key with your BLS
-private key generated above::
-
-  masternodeblsprivkey=24c1fa3c22c6ea6b1cc68a37be18acb51042b19465fe0a26301c8717bf939805
-
-Press enter to make sure there is a blank line at the end of the file,
-then press **Ctrl + X** to close the editor and **Y** and **Enter** save
-the file. Note that providing a ``masternodeblsprivkey`` enables
-masternode mode, which will automatically force the ``txindex=1``,
-``peerbloomfilters=1``, and ``prune=0`` settings necessary to provide
-masternode service. We now need to restart the masternode for this
-change to take effect. Enter the following commands, waiting a few
-seconds in between to give Genix Core time to shut down::
-
-  ~/.Genixcore/Genix-cli stop
-  sleep 15
-  ~/.Genixcore/Genixd
-
-At this point you can monitor your masternode by entering
-``~/.Genixcore/Genix-cli masternode status`` or using the **Get status**
-function in DMT. The final result should appear as follows:
-
-.. figure:: img/setup-Genix-cli-start.png
-   :width: 400px
-
-   Genix-cli masternode status output showing successfully registered masternode
-
-At this point you can safely log out of your server by typing ``exit``.
-Congratulations! Your masternode is now running.
-
-
-.. _Genixcore-protx:
-
-Option 2: Registering from Genix Core wallet
+Registering from Genix Core wallet
 -------------------------------------------
 
 Identify the funding transaction
@@ -628,7 +508,7 @@ will cause it to start serving as a masternode when the signed ProRegTx
 is broadcast by the owner (final step below). Log in to your masternode
 using ``ssh`` or PuTTY and edit the configuration file as follows::
 
-  nano ~/.Genixcore/Genix.conf
+  nano ~/.genixcore/genix.conf
 
 The editor appears with the existing masternode configuration. Add or
 uncomment this line in the file, replacing the key with your BLS private
@@ -645,9 +525,9 @@ masternode service. We now need to restart the masternode for this
 change to take effect. Enter the following commands, waiting a few
 seconds in between to give Genix Core time to shut down::
 
-  ~/.Genixcore/Genix-cli stop
+  ~/.genixcore/genix-cli stop
   sleep 15
-  ~/.Genixcore/Genixd
+  ~/.genixcore/genixd
 
 We will now prepare the transaction used to register the masternode on
 the network.
@@ -666,7 +546,7 @@ follows::
 
   getnewaddress
 
-  yfgxFhqrdDG15ZWKJAN6dQvn6dZdgBPAip
+  yfgxFhqrdDG15ZWKJAN6dQvn6dZdgBPAip TODO
 
 This address can also be used as the **voting key address**
 (``votingKeyAddr``). Alternatively, you can specify an address provided
@@ -675,15 +555,15 @@ key address as follows::
 
   getnewaddress
 
-  yfRaZN8c3Erpqj9iKnmQ9QDBeUuRhWV3Mg
-
+  yfRaZN8c3Erpqj9iKnmQ9QDBeUuRhWV3Mg TODO
+  
 Then either generate or choose an existing address to receive the
 **owner's masternode payouts** (``payoutAddress``). It is also possible
 to use an address external to the wallet::
 
   getnewaddress
 
-  yjZVt49WsQd6XSrPVAUGXtJccxviH9ZQpN
+  yjZVt49WsQd6XSrPVAUGXtJccxviH9ZQpN TODO
 
 You can also optionally generate and fund another address as the
 **transaction fee source** (``feeSourceAddress``). If you selected an
@@ -740,7 +620,7 @@ Example (remove line breaks if copying)::
   protx register_prepare 
     16347a28f4e5edf39f4dceac60e2327931a25fdee1fb4b94b63eeacf0d5879e3 
     1 
-    45.76.230.239:19999 
+    45.76.230.239:43649 
     yfgxFhqrdDG15ZWKJAN6dQvn6dZdgBPAip 
     99f20ed1538e28259ff80044982372519a2e6e4cdedb01c96f8f22e755b2b3124fbeebdf6de3587189cf44b3c6e7670e 
     yfRaZN8c3Erpqj9iKnmQ9QDBeUuRhWV3Mg 
