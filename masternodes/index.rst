@@ -50,9 +50,11 @@ a self-operated masternode.
 .. toctree::
    :maxdepth: 1
 
-   understanding.rst
-   hosting.rst
+   .. understanding.rst
+   .. hosting.rst
    setup.rst
-   setup-testnet.rst
+   .. setup-testnet.rst
    maintenance.rst
-   advanced.rst
+   .. advanced.rst
+
+   
