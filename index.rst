@@ -47,8 +47,8 @@ Genix Docs are currently under construction we currently only support masternode
 ..     </div>
     
 
-Contents
-========
+.. Contents
+.. ========
 
 .. .. toctree::
 ..    :maxdepth: 3
@@ -80,13 +80,13 @@ Contents
 
 .. _network-docs:
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Network
+.. .. toctree::
+..    :maxdepth: 3
+..    :caption: Network
 
-   .. governance/index.rst
-   masternodes/index
-   .. mining/index
-   .. developers/index
-   .. marketing.rst
-   .. legal.rst
+..    .. governance/index.rst
+..    masternodes/index
+..    .. mining/index
+..    .. developers/index
+..    .. marketing.rst
+..    .. legal.rst
