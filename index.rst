@@ -48,33 +48,33 @@ interest.
 Contents
 ========
 
-.. toctree::
-   :maxdepth: 3
-   :caption: First Steps
+.. .. toctree::
+..    :maxdepth: 3
+..    :caption: First Steps
 
-   introduction/about
-   introduction/features
-   introduction/how-to-buy
-   introduction/safety
-   introduction/information
+..    introduction/about
+..    introduction/features
+..    introduction/how-to-buy
+..    introduction/safety
+..    introduction/information
 
-.. _user-docs:
+.. .. _user-docs:
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Users
+.. .. toctree::
+..    :maxdepth: 3
+..    :caption: Users
 
-   wallets/index
-   earning-spending
+..    wallets/index
+..    earning-spending
 
-.. _merchant-docs:
+.. .. _merchant-docs:
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Merchants
+.. .. toctree::
+..    :maxdepth: 3
+..    :caption: Merchants
 
-   merchants/getting-started
-   merchants/administrative
+..    merchants/getting-started
+..    merchants/administrative
 
 .. _network-docs:
 
@@ -82,9 +82,9 @@ Contents
    :maxdepth: 3
    :caption: Network
 
-   governance/index.rst
+   .. governance/index.rst
    masternodes/index
-   mining/index
-   developers/index
-   marketing.rst
-   legal.rst
+   .. mining/index
+   .. developers/index
+   .. marketing.rst
+   .. legal.rst
