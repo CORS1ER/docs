@@ -1,6 +1,6 @@
 .. meta::
-   :description: This guide describes how to set up a Dash masternode. It also describes various options for hosting and different wallets
-   :keywords: dash, guide, masternodes, trezor, dip3, setup, bls
+   :description: This guide describes how to set up a Genix masternode. It also describes various options for hosting and different wallets
+   :keywords: Genix, guide, masternodes, trezor, dip3, setup, bls
 
 .. _masternode-setup:
 
@@ -11,18 +11,16 @@ Setup
 Setting up a masternode requires a basic understanding of Linux and
 blockchain technology, as well as an ability to follow instructions
 closely. It also requires regular maintenance and careful security,
-particularly if you are not storing your Dash on a hardware wallet.
+particularly if you are not storing your Genix on a hardware wallet.
 There are some decisions to be made along the way, and optional extra
 steps to take for increased security.
 
 Commercial :ref:`masternode hosting services <masternode-hosting>` are
 available if you prefer to delegate day-to-day operation of your
 masternode to a professional operator. When using these hosting
-services, you retain full control of the 1000 DASH collateral and pay an
-agreed percentage of your reward to the operator. It is also possible to
-delegate your voting keys to a representative, see the 
-:ref:`governance documentation <delegating-votes>` for more
-information.
+services, you retain full control of the 100,000 GENIX collateral and pay an
+agreed percentage of your reward to the operator.
+ .. It is also possible to delegate your voting keys to a representative, see the :ref:`governance documentation <delegating-votes>` for more information.
 
 
 Before you begin
@@ -32,28 +30,28 @@ This guide assumes you are setting up a single mainnet masternode for
 the first time. If you are updating a masternode, see  :ref:`here
 <masternode-update>` instead. You will need:
 
-- 1000 Dash
-- A wallet to store your Dash, preferably a hardware wallet, although 
-  Dash Core wallet is also supported
+- 100,000 GENIX
+- A wallet to store your Genix, preferably a hardware wallet, although 
+  Genix Core wallet is also supported
 - A Linux server, preferably a Virtual Private Server (VPS)
 
-Dash 0.13.0 and later implement DIP003, which introduces several changes
-to how a Dash masternode is set up and operated. While this network
-upgrade was completed in early 2019, a list of available documentation
+Genix v2.2.1 and later implement DIP003, which introduces several changes
+to how a Genix masternode is set up and operated. While this network
+upgrade was completed in early 2021, a list of available documentation
 appears below:
 
 - `DIP003 Deterministic Masternode Lists <https://github.com/dashpay/dips/blob/master/dip-0003.md>`__
 - :ref:`dip3-changes`
-- `Dash 0.13 Upgrade Procedure for Masternodes (legacy documentation) <https://docs.dash.org/en/0.13.0/masternodes/dip3-upgrade.html>`__
+- `Genix 2.2.1 Upgrade Procedure for Masternodes (legacy documentation) <https://docs.Genix.cx/en/2.2.1/masternodes/dip3-upgrade.html>`__
 - :ref:`Full masternode setup guide <masternode-setup>` (you are here)
 - :ref:`Information for users of hosted masternodes <hosted-setup>`
 - :ref:`Information for operators of hosted masternodes <operator-transactions>`
 
 This documentation describes the commands as if they were
-entered in the Dash Core GUI by opening the console from **Tools > Debug
+entered in the Genix Core GUI by opening the console from **Tools > Debug
 console**, but the same result can be achieved on a masternode by
 entering the same commands and adding the prefix 
-``~/.dashcore/dash-cli`` to each command.
+``~/.genixcore/genix-cli`` to each command.
 
 
 .. _vps-setup:
@@ -66,7 +64,7 @@ installation of an operating system (usually Linux) operating within a
 virtual machine. The virtual machine allows the VPS provider to run
 multiple systems on one physical server, making it more efficient and
 much cheaper than having a single operating system running on the "bare
-metal" of each server. A VPS is ideal for hosting a Dash masternode
+metal" of each server. A VPS is ideal for hosting a Genix masternode
 because they typically offer guaranteed uptime, redundancy in the case
 of hardware failure and a static IP address that is required to ensure
 you remain in the masternode payment queue. While running a masternode
@@ -97,7 +95,7 @@ with security updates for 5 years, instead of the usual 9 months.
 
    Vultr server type selection screen
 
-Select a server size offering at least 2GB of memory.
+Select a server size offering at least 1GB of memory.
 
 .. figure:: img/setup-server-size.png
    :width: 400px
@@ -105,7 +103,7 @@ Select a server size offering at least 2GB of memory.
    Vultr server size selection screen
 
 Enter a hostname and label for your server. In this example we will use
-``dashmn1`` as the hostname.
+``Genixmn1`` as the hostname.
 
 .. figure:: img/setup-server-hostname.png
    :width: 400px
@@ -206,7 +204,7 @@ newly secured environment as the new user::
 
   ufw allow ssh/tcp
   ufw limit ssh/tcp
-  ufw allow 9999/tcp
+  ufw allow 43649/tcp
   ufw logging on
   ufw enable
 
@@ -274,120 +272,36 @@ attacks, much more can be done. In particular, `authenticating with a public key
 instead of a username/password combination and `enabling automatic security updates <https://help.ubuntu.com/community/AutomaticSecurityUpdates>`_ 
 is advisable. More tips are available `here <https://www.cyberciti.biz/tips/linux-security.html>`__. 
 However, since the masternode does not actually store the keys to any
-Dash, these steps are considered beyond the scope of this guide.
+Genix, these steps are considered beyond the scope of this guide.
 
 
 Send the collateral
 ===================
 
-A Dash address with a single unspent transaction output (UTXO) of
-exactly 1000 DASH is required to operate a masternode. Once it has been
+A Genix address with a single unspent transaction output (UTXO) of
+exactly 100,000 GENIX is required to operate a masternode. Once it has been
 sent, various keys regarding the transaction must be extracted for later
 entry in a configuration file and registration transaction as proof to
 write the configuration to the blockchain so the masternode can be
 included in the deterministic list. A masternode can be registered from
-a hardware wallet or the official Dash Core wallet, although a hardware
+a hardware wallet or the official Genix Core wallet, although a hardware
 wallet is highly recommended to enhance security and protect yourself
 against hacking. This guide will describe the steps for both hardware
-wallets and Dash Core.
+wallets and Genix Core.
 
-Option 1: Sending from a hardware wallet
-----------------------------------------
-
-Set up your Trezor using the Trezor wallet at https://wallet.trezor.io/
-and send a test transaction to verify that it is working properly. For
-help on this, see :ref:`this guide <hardware-trezor>` - you may also
-choose to (carefully!) `add a passphrase <https://blog.trezor.io/passphrase-the-ultimate-protection-for-your-accounts-3a311990925b>`_
-to your Trezor to further protect your collateral. Create a new account
-in your Trezor wallet by clicking **Add account**. Then click the
-**Receive** tab and send exactly 1000 DASH to the address displayed. If
-you are setting up multiple masternodes, send 1000 DASH to consecutive
-addresses within the same new account. You should see the transaction as
-soon as the first confirmation arrives, usually within a few minutes.
-
-.. figure:: img/setup-collateral-trezor.png
-   :width: 400px
-
-   Trezor Wallet Receive tab showing successfully received collateral of
-   1000 DASH
-
-Once the transaction appears, click the QR code on the right to view the
-transaction on the blockchain. Keep this window open as we complete the
-following steps, since we will soon need to confirm that 15
-confirmations exist, as shown in the following screenshot.
-
-.. figure:: img/setup-collateral-blocks.png
-   :width: 400px
-
-   Trezor blockchain explorer showing 15 confirmations for collateral
-   transfer
-
-While we are waiting for 15 confirmations, download the latest version
-of the Dash Masternode Tool (DMT) from the GitHub releases page `here
-<https://github.com/Bertrand256/dash-masternode-tool/releases>`__. Unzip
-and run the file. The following window appears.
-
-.. figure:: img/setup-collateral-dmt-start.png
-   :width: 400px
-
-   Dash Masternode Tool startup screen
-
-Click the third button from the left **Check Dash Network Connection**
-in the top left corner of the main window to verify that the connection
-is working. Then connect your Trezor device and click the next button
-**Test Hardware Wallet Connection** to verify the Trezor connection is
-working.
-
-.. image:: img/setup-collateral-connection.png
-   :width: 100px
-
-.. figure:: img/setup-collateral-hardware.png
-   :width: 180px
-
-   Dash Masternode Tool successful connection confirmations
-
-We will now use DMT to enter some basic information about the masternode
-and extract the transaction ID. Carry out the following sequence of
-steps as shown in this screenshot:
-
-.. figure:: img/setup-collateral-dmt-steps.png
-   :width: 400px
-
-   Dash Masternode Tool configuration steps
-
-#. Click the **New** button.
-#. Enter a name for your masternode. The host name you specified 
-   for your VPS above is a good choice.
-#. Enter the IP address of your masternode. This was given to you
-   by the VPS provider when you set up the server. Then enter the TCP 
-   port number. This should be 9999.
-#. Click **Locate collateral** to view unused collateral funding 
-   transactions available on the connected hardware wallet. Select the 
-   address to which you sent 1000 Dash and click **Apply**. The 
-   **Collateral address**, **path**, **Collateral TX hash** and
-   **index** fields should be filled automatically.
-
-.. figure:: img/setup-collateral-dmt-ready.png
-   :width: 400px
-
-   Dash Masternode Tool with masternode configuration
-
-Leave DMT open and continue with the next step: :ref:`installing Dash
-Core on your VPS <masternode-setup-install-dashcore>`.
-
-Option 2: Sending from Dash Core wallet
+Sending from Genix Core wallet
 ---------------------------------------
 
-Open Dash Core wallet and wait for it to synchronize with the network.
+Open Genix Core wallet and wait for it to synchronize with the network.
 It should look like this when ready:
 
-.. figure:: img/setup-collateral-dashcore.png
+.. figure:: img/setup-collateral-Genixcore.png
    :width: 400px
 
-   Fully synchronized Dash Core wallet
+   Fully synchronized Genix Core wallet
 
 Click **Tools > Debug console** to open the console. Type the following
-command into the console to generate a new Dash address for the
+command into the console to generate a new Genix address for the
 collateral::
 
   getnewaddress
@@ -403,13 +317,13 @@ Next, back up your wallet file by selecting **File > Backup Wallet**.
 Save the file to a secure location physically separate to your computer,
 since this will be the only way you can access our funds if anything
 happens to your computer. For more details on these steps, see
-:ref:`here <dashcore-backup>`.
+:ref:`here <Genixcore-backup>`.
 
-Now send exactly 1000 DASH in a single transaction to the new address
+Now send exactly 1000 Genix in a single transaction to the new address
 you generated in the previous step. This may be sent from another
 wallet, or from funds already held in your current wallet. Once the
 transaction is complete, view the transaction in a `blockchain explorer
-<https://insight.dash.org/insight/>`_ by searching for the address. You
+<https://insight.Genix.org/insight/>`_ by searching for the address. You
 will need 15 confirmations before you can register the masternode, but
 you can continue with the next step at this point already: generating
 your masternode operator key.
@@ -421,40 +335,40 @@ your masternode operator key.
    transfer
 
 
-.. _masternode-setup-install-dashcore:
+.. _masternode-setup-install-Genixcore:
 
-Install Dash Core
+Install Genix Core
 =================
 
-Dash Core is the software behind both the Dash Core GUI wallet and Dash
+Genix Core is the software behind both the Genix Core GUI wallet and Genix
 masternodes. If not displaying a GUI, it runs as a daemon on your VPS
-(dashd), controlled by a simple command interface (dash-cli).
+(Genixd), controlled by a simple command interface (Genix-cli).
 
 Open PuTTY or a console again and connect using the username and
 password you just created for your new, non-root user. The following
-options are available for installing a Dash masternode:
+options are available for installing a Genix masternode:
 
 - Manual installation (this guide)
-- `xkcd's installation guide <https://www.dash.org/forum/threads/system-wide-masternode-setup-with-systemd-auto-re-start-rfc.39460/>`__
-- `dashman installation <https://docs.dash.org/en/0.15.0/masternodes/setup.html#option-1-automated-installation-using-dashman>`__ (deprecated)
-- `mn-bootstrap installation <https://docs.dash.org/en/mn-bootstrap/masternodes/setup.html#install-mn-bootstrap>`__ (beta version, currently testnet only)
+- `xkcd's installation guide <https://www.Genix.org/forum/threads/system-wide-masternode-setup-with-systemd-auto-re-start-rfc.39460/>`__
+- `Genixman installation <https://docs.Genix.org/en/0.15.0/masternodes/setup.html#option-1-automated-installation-using-Genixman>`__ (deprecated)
+- `mn-bootstrap installation <https://docs.Genix.org/en/mn-bootstrap/masternodes/setup.html#install-mn-bootstrap>`__ (beta version, currently testnet only)
 
 Manual installation
 -----------------------------
 
-To manually download and install the components of your Dash masternode,
-visit the `GitHub releases page <https://github.com/dashpay/dash/releases>`_ 
+To manually download and install the components of your Genix masternode,
+visit the `GitHub releases page <https://github.com/Genixpay/Genix/releases>`_ 
 and copy the link to the latest ``x86_64-linux-gnu`` version. Go back to
 your terminal window and enter the following command, pasting in the
-address to the latest version of Dash Core by right clicking or pressing
+address to the latest version of Genix Core by right clicking or pressing
 **Ctrl + V**::
 
   cd /tmp
-  wget https://github.com/dashpay/dash/releases/download/v0.16.0.1/dashcore-0.16.0.1-x86_64-linux-gnu.tar.gz
+  wget https://github.com/Genixpay/Genix/releases/download/v0.16.1.1/Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz
 
 Verify the authenticity of your download by checking its detached
-signature against the public key published by the Dash Core development
-team. All releases of Dash are signed using GPG with one of the
+signature against the public key published by the Genix Core development
+team. All releases of Genix are signed using GPG with one of the
 following keys:
 
 - Alexander Block (codablock) with the key ``63A9 6B40 6102 E091``,
@@ -466,20 +380,20 @@ following keys:
 
   curl https://keybase.io/codablock/pgp_keys.asc | gpg --import
   curl https://keybase.io/pasta/pgp_keys.asc | gpg --import
-  wget https://github.com/dashpay/dash/releases/download/v0.16.0.1/dashcore-0.16.0.1-x86_64-linux-gnu.tar.gz.asc
-  gpg --verify dashcore-0.16.0.1-x86_64-linux-gnu.tar.gz.asc
+  wget https://github.com/Genixpay/Genix/releases/download/v0.16.1.1/Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz.asc
+  gpg --verify Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz.asc
 
-Create a working directory for Dash, extract the compressed archive and
+Create a working directory for Genix, extract the compressed archive and
 copy the necessary files to the directory::
 
-  mkdir ~/.dashcore
-  tar xfv dashcore-0.16.0.1-x86_64-linux-gnu.tar.gz
-  cp -f dashcore-0.16.0/bin/dashd ~/.dashcore/
-  cp -f dashcore-0.16.0/bin/dash-cli ~/.dashcore/
+  mkdir ~/.Genixcore
+  tar xfv Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz
+  cp -f Genixcore-0.16.1/bin/Genixd ~/.Genixcore/
+  cp -f Genixcore-0.16.1/bin/Genix-cli ~/.Genixcore/
 
 Create a configuration file using the following command::
 
-  nano ~/.dashcore/dash.conf
+  nano ~/.Genixcore/Genix.conf
 
 An editor window will appear. We now need to create a configuration file
 specifying several variables. Copy and paste the following text to get
@@ -513,27 +427,27 @@ result should look something like this:
 .. figure:: img/setup-manual-conf.png
    :width: 400px
 
-   Entering key data in dash.conf on the masternode
+   Entering key data in Genix.conf on the masternode
 
 Press **Ctrl + X** to close the editor and **Y** and **Enter** save the
-file. You can now start running Dash on the masternode to begin
+file. You can now start running Genix on the masternode to begin
 synchronization with the blockchain::
 
-  ~/.dashcore/dashd
+  ~/.Genixcore/Genixd
 
-You will see a message reading **Dash Core server starting**. We will
+You will see a message reading **Genix Core server starting**. We will
 now install Sentinel, a piece of software which operates as a watchdog
 to communicate to the network that your node is working properly::
 
-  cd ~/.dashcore
-  git clone https://github.com/dashpay/sentinel.git
+  cd ~/.Genixcore
+  git clone https://github.com/Genixpay/sentinel.git
   cd sentinel
   virtualenv venv
   venv/bin/pip install -r requirements.txt
   venv/bin/python bin/sentinel.py
 
-You will see a message reading **dashd not synced with network! Awaiting
-full sync before running Sentinel.** Add dashd and sentinel to crontab
+You will see a message reading **Genixd not synced with network! Awaiting
+full sync before running Sentinel.** Add Genixd and sentinel to crontab
 to make sure it runs every minute to check on your masternode::
 
   crontab -e
@@ -541,8 +455,8 @@ to make sure it runs every minute to check on your masternode::
 Choose nano as your editor and enter the following lines at the end of
 the file::
 
-  * * * * * cd ~/.dashcore/sentinel && ./venv/bin/python bin/sentinel.py 2>&1 >> sentinel-cron.log
-  * * * * * pidof dashd || ~/.dashcore/dashd
+  * * * * * cd ~/.Genixcore/sentinel && ./venv/bin/python bin/sentinel.py 2>&1 >> sentinel-cron.log
+  * * * * * pidof Genixd || ~/.Genixcore/Genixd
 
 Press enter to make sure there is a blank line at the end of the file,
 then press **Ctrl + X** to close the editor and **Y** and **Enter** save
@@ -551,7 +465,7 @@ transaction to complete, and wait for the blockchain to finish
 synchronizing on the masternode. You can use the following commands to
 monitor progress::
 
-  ~/.dashcore/dash-cli mnsync status
+  ~/.Genixcore/Genix-cli mnsync status
 
 When synchronisation is complete, you should see the following
 response::
@@ -595,11 +509,11 @@ private keys required for a DIP003 deterministic masternode:
 .. figure:: img/setup-dmt-full.png
    :width: 220px
 
-   Dash Masternode Tool ready to register a new masternode
+   Genix Masternode Tool ready to register a new masternode
 
 Then click **Register masternode**. Optionally specify a different
 **Payout address** and/or **Operator reward**, then click **Continue**.
-Select **Remote Dash RPC Node (automatic method)**. (See `here <https://github.com/Bertrand256/dash-masternode-tool/blob/master/doc/config-connection-direct.md>`__ 
+Select **Remote Genix RPC Node (automatic method)**. (See `here <https://github.com/Bertrand256/Genix-masternode-tool/blob/master/doc/config-connection-direct.md>`__ 
 for documentation on using your own local RPC node.) and confirm the
 following two messages:
 
@@ -609,16 +523,16 @@ following two messages:
 .. figure:: img/setup-dmt-sent.png
    :width: 220px
 
-   Dash Masternode Tool confirmation dialogs to register a masternode
+   Genix Masternode Tool confirmation dialogs to register a masternode
 
-The BLS private key must be entered in the ``dash.conf`` file on the
+The BLS private key must be entered in the ``Genix.conf`` file on the
 masternode. This allows the masternode to watch the blockchain for
 relevant Pro*Tx transactions, and will cause it to start serving as a
 masternode when the signed ProRegTx is broadcast by the owner, as we
 just did above. Log in to your masternode using ``ssh`` or PuTTY and
 edit the configuration file as follows::
 
-  nano ~/.dashcore/dash.conf
+  nano ~/.Genixcore/Genix.conf
 
 The editor appears with the existing masternode configuration. Add or
 uncomment this lines in the file, replacing the key with your BLS
@@ -633,34 +547,34 @@ masternode mode, which will automatically force the ``txindex=1``,
 ``peerbloomfilters=1``, and ``prune=0`` settings necessary to provide
 masternode service. We now need to restart the masternode for this
 change to take effect. Enter the following commands, waiting a few
-seconds in between to give Dash Core time to shut down::
+seconds in between to give Genix Core time to shut down::
 
-  ~/.dashcore/dash-cli stop
+  ~/.Genixcore/Genix-cli stop
   sleep 15
-  ~/.dashcore/dashd
+  ~/.Genixcore/Genixd
 
 At this point you can monitor your masternode by entering
-``~/.dashcore/dash-cli masternode status`` or using the **Get status**
+``~/.Genixcore/Genix-cli masternode status`` or using the **Get status**
 function in DMT. The final result should appear as follows:
 
-.. figure:: img/setup-dash-cli-start.png
+.. figure:: img/setup-Genix-cli-start.png
    :width: 400px
 
-   dash-cli masternode status output showing successfully registered masternode
+   Genix-cli masternode status output showing successfully registered masternode
 
 At this point you can safely log out of your server by typing ``exit``.
 Congratulations! Your masternode is now running.
 
 
-.. _dashcore-protx:
+.. _Genixcore-protx:
 
-Option 2: Registering from Dash Core wallet
+Option 2: Registering from Genix Core wallet
 -------------------------------------------
 
 Identify the funding transaction
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you used an address in Dash Core wallet for your collateral
+If you used an address in Genix Core wallet for your collateral
 transaction, you now need to find the txid of the transaction. Click
 **Tools > Debug console** and enter the following command::
 
@@ -690,7 +604,7 @@ created.
 If you are using a hosting service, they may provide you with their
 public key, and you can skip this step. If you are hosting your own
 masternode or have agreed to provide your host with the BLS private key,
-generate a BLS public/private keypair in Dash Core by clicking **Tools >
+generate a BLS public/private keypair in Genix Core by clicking **Tools >
 Debug console** and entering the following command::
 
   bls generate
@@ -708,13 +622,13 @@ Add the private key to your masternode configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The public key will be used in following steps. The private key must be
-entered in the ``dash.conf`` file on the masternode. This allows the
+entered in the ``Genix.conf`` file on the masternode. This allows the
 masternode to watch the blockchain for relevant Pro*Tx transactions, and
 will cause it to start serving as a masternode when the signed ProRegTx
 is broadcast by the owner (final step below). Log in to your masternode
 using ``ssh`` or PuTTY and edit the configuration file as follows::
 
-  nano ~/.dashcore/dash.conf
+  nano ~/.Genixcore/Genix.conf
 
 The editor appears with the existing masternode configuration. Add or
 uncomment this line in the file, replacing the key with your BLS private
@@ -729,11 +643,11 @@ masternode mode, which will automatically force the ``txindex=1``,
 ``peerbloomfilters=1``, and ``prune=0`` settings necessary to provide
 masternode service. We now need to restart the masternode for this
 change to take effect. Enter the following commands, waiting a few
-seconds in between to give Dash Core time to shut down::
+seconds in between to give Genix Core time to shut down::
 
-  ~/.dashcore/dash-cli stop
+  ~/.Genixcore/Genix-cli stop
   sleep 15
-  ~/.dashcore/dashd
+  ~/.Genixcore/Genixd
 
 We will now prepare the transaction used to register the masternode on
 the network.
@@ -747,7 +661,7 @@ this transaction as the ``operatorPubKey``.
 
 First, we need to get a new, unused address from the wallet to serve as
 the **owner key address** (``ownerKeyAddr``). This is not the same as
-the collateral address holding 1000 Dash. Generate a new address as
+the collateral address holding 1000 Genix. Generate a new address as
 follows::
 
   getnewaddress
@@ -796,21 +710,21 @@ syntax::
 Open a text editor such as notepad to prepare this command. Replace each
 argument to the command as follows:
 
-- ``collateralHash``: The txid of the 1000 Dash collateral funding 
+- ``collateralHash``: The txid of the 1000 Genix collateral funding 
   transaction
-- ``collateralIndex``: The output index of the 1000 Dash funding 
+- ``collateralIndex``: The output index of the 1000 Genix funding 
   transaction
 - ``ipAndPort``: Masternode IP address and port, in the format 
   ``x.x.x.x:yyyy``
-- ``ownerKeyAddr``: The new Dash address generated above for the 
+- ``ownerKeyAddr``: The new Genix address generated above for the 
   owner/voting address
 - ``operatorPubKey``: The BLS public key generated above (or provided 
   by your hosting service)
-- ``votingKeyAddr``: The new Dash address generated above, or the 
+- ``votingKeyAddr``: The new Genix address generated above, or the 
   address of a delegate, used for proposal voting
 - ``operatorReward``: The percentage of the block reward allocated to 
   the operator as payment
-- ``payoutAddress``: A new or existing Dash address to receive the 
+- ``payoutAddress``: A new or existing Genix address to receive the 
   owner's masternode rewards
 - ``feeSourceAddress``: An (optional) address used to fund ProTx fee. 
   ``payoutAddress`` will be used if not specified.
@@ -854,7 +768,7 @@ private key for the collateral address as specified in
 ``collateralAddress``. Note that no internet connection is required for
 this step, meaning that the wallet can remain disconnected from the
 internet in cold storage to sign the message. In this example we will
-again use Dash Core, but it is equally possible to use the signing
+again use Genix Core, but it is equally possible to use the signing
 function of a hardware wallet. The command takes the following syntax::
 
   signmessage collateralAddress signMessage
@@ -872,7 +786,7 @@ Submit the signed message
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We will now submit the ProRegTx special transaction to the blockchain to
-register the masternode. This command must be sent from a Dash Core
+register the masternode. This command must be sent from a Genix Core
 wallet holding a balance on either the ``feeSourceAddress`` or
 ``payoutAddress``, since a standard transaction fee is involved. The
 command takes the following syntax::
@@ -896,13 +810,13 @@ Output::
 
 Your masternode is now registered and will appear on the Deterministic
 Masternode List after the transaction is mined to a block. You can view
-this list on the **Masternodes -> DIP3 Masternodes** tab of the Dash
+this list on the **Masternodes -> DIP3 Masternodes** tab of the Genix
 Core wallet, or in the console using the command ``protx list valid``,
 where the txid of the final ``protx register_submit`` transaction
 identifies your masternode.
 
 At this point you can go back to your terminal window and monitor your
-masternode by entering ``~/.dashcore/dash-cli masternode status`` or
+masternode by entering ``~/.Genixcore/Genix-cli masternode status`` or
 using the **Get status** function in DMT. 
 
 At this point you can safely log out of your server by typing ``exit``.

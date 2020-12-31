@@ -172,11 +172,11 @@ Tools
 Block explorers, statistics and visualizations
 ----------------------------------------------
 
-- https://explorer.dash.org/insight/
 - https://insight.dash.org/insight/
 - https://blockchair.com/dash
 - https://chainz.cryptoid.info/dash/
 - https://www.coinexplorer.net/dash
+- https://www.oklink.com/dash
 - https://bitinfocharts.com/dash/explorer/
 - https://dashblockexplorer.com
 - https://live.blockcypher.com/dash/
@@ -206,9 +206,12 @@ Masternode management
 - https://dash-news.de/dashtv/
 
 
-Price monitoring and statistics
--------------------------------
+Price monitoring and research
+-----------------------------
 
+- https://messari.io/asset/dash
+- https://namu.wiki/w/Dash
+- https://xangle.io/project/DASH/profile
 - https://coinmarketcap.com/currencies/dash/
 - https://bitinfocharts.com/dash/
 - https://www.cryptonator.com/widget
