@@ -541,7 +541,7 @@ this transaction as the ``operatorPubKey``.
 
 First, we need to get a new, unused address from the wallet to serve as
 the **owner key address** (``ownerKeyAddr``). This is not the same as
-the collateral address holding 1000 Genix. Generate a new address as
+the collateral address holding 100,000 Genix. Generate a new address as
 follows::
 
   getnewaddress
@@ -590,9 +590,9 @@ syntax::
 Open a text editor such as notepad to prepare this command. Replace each
 argument to the command as follows:
 
-- ``collateralHash``: The txid of the 1000 Genix collateral funding 
+- ``collateralHash``: The txid of the 100,000 Genix collateral funding 
   transaction
-- ``collateralIndex``: The output index of the 1000 Genix funding 
+- ``collateralIndex``: The output index of the 100,000 Genix funding 
   transaction
 - ``ipAndPort``: Masternode IP address and port, in the format 
   ``x.x.x.x:yyyy``
