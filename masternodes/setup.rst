@@ -433,7 +433,7 @@ Press **Ctrl + X** to close the editor and **Y** and **Enter** save the
 file. You can now start running Genix on the masternode to begin
 synchronization with the blockchain::
 
-  ~/.Genixcore/Genixd
+  ~/.genixcore/genixd
 
 You will see a message reading **Genix Core server starting**. We will
 now install Sentinel, a piece of software which operates as a watchdog
