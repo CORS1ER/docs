@@ -15,12 +15,11 @@ particularly if you are not storing your Genix on a hardware wallet.
 There are some decisions to be made along the way, and optional extra
 steps to take for increased security.
 
-Commercial :ref:`masternode hosting services <masternode-hosting>` are
-available if you prefer to delegate day-to-day operation of your
+Commercial masternode hosting services available 
+if you prefer to delegate day-to-day operation of your
 masternode to a professional operator. When using these hosting
 services, you retain full control of the 100,000 GENIX collateral and pay an
 agreed percentage of your reward to the operator.
- .. It is also possible to delegate your voting keys to a representative, see the :ref:`governance documentation <delegating-votes>` for more information.
 
 
 Before you begin
@@ -31,8 +30,7 @@ the first time. If you are updating a masternode, see  :ref:`here
 <masternode-update>` instead. You will need:
 
 - 100,000 GENIX
-- A wallet to store your Genix, preferably a hardware wallet, although 
-  Genix Core wallet is also supported
+- Genix Core Wallet
 - A Linux server, preferably a Virtual Private Server (VPS)
 
 Genix v2.2.1 and later implement DIP003, which introduces several changes
@@ -42,10 +40,7 @@ appears below:
 
 - `DIP003 Deterministic Masternode Lists <https://github.com/dashpay/dips/blob/master/dip-0003.md>`__
 - :ref:`dip3-changes`
-- `Genix 2.2.1 Upgrade Procedure for Masternodes (legacy documentation) <https://docs.Genix.cx/en/2.2.1/masternodes/dip3-upgrade.html>`__
 - :ref:`Full masternode setup guide <masternode-setup>` (you are here)
-- :ref:`Information for users of hosted masternodes <hosted-setup>`
-- :ref:`Information for operators of hosted masternodes <operator-transactions>`
 
 This documentation describes the commands as if they were
 entered in the Genix Core GUI by opening the console from **Tools > Debug
@@ -293,19 +288,13 @@ Sending from Genix Core wallet
 ---------------------------------------
 
 Open Genix Core wallet and wait for it to synchronize with the network.
-It should look like this when ready:
-
-.. figure:: img/setup-collateral-Genixcore.png
-   :width: 400px
-
-   Fully synchronized Genix Core wallet
 
 Click **Tools > Debug console** to open the console. Type the following
 command into the console to generate a new Genix address for the
 collateral::
 
   getnewaddress
-  yiFfzbwiN9oneftd7cEfr3kQLRwQ4kp7ue
+  GZRqhmJbCCJwpvREFHNht55Qix1Mpj56SQ 
 
 Take note of the collateral address, since we will need it later.  The
 next step is to secure your wallet (if you have not already done so).
@@ -327,13 +316,6 @@ transaction is complete, view the transaction in a `blockchain explorer
 will need 15 confirmations before you can register the masternode, but
 you can continue with the next step at this point already: generating
 your masternode operator key.
-
-.. figure:: img/setup-collateral-blocks.png
-   :width: 400px
-
-   Trezor blockchain explorer showing 15 confirmations for collateral
-   transfer
-
 
 .. _masternode-setup-install-genixcore:
 
@@ -358,15 +340,15 @@ address to the latest version of Genix Core by right clicking or pressing
 **Ctrl + V**::
 
   cd /tmp
-  wget PUTLINKHERE TODO
+  wget https://github.com/genix-project/genix/releases/download/v2.2.1.0/Ubuntu-1804-x64.zip
 
-Create a working directory for Genix, extract the compressed archive and
+Create a working directory for Genix, install unzip & extract the compressed archive then,
 copy the necessary files to the directory::
-
+  sudo apt-get install unzip
   mkdir ~/.genixcore
-  tar xfv Genixcore-0.16.1.1-x86_64-linux-gnu.tar.gz TODO
-  cp -f Genixcore-0.16.1/bin/Genixd ~/.genixcore/ TODO
-  cp -f Genixcore-0.16.1/bin/Genix-cli ~/.genixcore/ TODO
+  unzip Ubuntu-1804-x64.zip 
+  cp -f genixd ~/.genixcore/ 
+  cp -f genix-cli ~/.genixcore/ 
 
 Create a configuration file using the following command::
 
@@ -400,11 +382,6 @@ Replace the fields marked with ``XXXXXXX`` as follows:
 
 Leave the ``masternodeblsprivkey`` field commented out for now. The
 result should look something like this:
-
-.. figure:: img/setup-manual-conf.png
-   :width: 400px
-
-   Entering key data in genix.conf on the masternode
 
 Press **Ctrl + X** to close the editor and **Y** and **Enter** save the
 file. You can now start running Genix on the masternode to begin
@@ -546,7 +523,7 @@ follows::
 
   getnewaddress
 
-  yfgxFhqrdDG15ZWKJAN6dQvn6dZdgBPAip TODO
+  GXzhVPiC9StZnneXfZBnsCSRTKUKmgoHYd
 
 This address can also be used as the **voting key address**
 (``votingKeyAddr``). Alternatively, you can specify an address provided
@@ -555,7 +532,7 @@ key address as follows::
 
   getnewaddress
 
-  yfRaZN8c3Erpqj9iKnmQ9QDBeUuRhWV3Mg TODO
+  GYXALgxRpyqyU2XHFtpMgQ1ySbghD4Av6M
   
 Then either generate or choose an existing address to receive the
 **owner's masternode payouts** (``payoutAddress``). It is also possible
@@ -563,7 +540,7 @@ to use an address external to the wallet::
 
   getnewaddress
 
-  yjZVt49WsQd6XSrPVAUGXtJccxviH9ZQpN TODO
+  GJZqps5DCE9MgzXVtavAU5RBJxiFVYeGkZ
 
 You can also optionally generate and fund another address as the
 **transaction fee source** (``feeSourceAddress``). If you selected an
@@ -621,19 +598,19 @@ Example (remove line breaks if copying)::
     16347a28f4e5edf39f4dceac60e2327931a25fdee1fb4b94b63eeacf0d5879e3 
     1 
     45.76.230.239:43649 
-    yfgxFhqrdDG15ZWKJAN6dQvn6dZdgBPAip 
+    GXzhVPiC9StZnneXfZBnsCSRTKUKmgoHYd 
     99f20ed1538e28259ff80044982372519a2e6e4cdedb01c96f8f22e755b2b3124fbeebdf6de3587189cf44b3c6e7670e 
-    yfRaZN8c3Erpqj9iKnmQ9QDBeUuRhWV3Mg 
+    GYXALgxRpyqyU2XHFtpMgQ1ySbghD4Av6M 
     0 
-    yjZVt49WsQd6XSrPVAUGXtJccxviH9ZQpN 
-    yR83WsikBaBaNusTnHZf28kAcL8oVmp1TE
+    GJZqps5DCE9MgzXVtavAU5RBJxiFVYeGkZ 
+    GJFTbwYkHehYvbhfy1ZHo6BTAya9LrfybE
 
 Output::
 
   {
     "tx": "030001000175c9d23c2710798ef0788e6a4d609460586a20e91a15f2097f56fc6e007c4f8e0000000000feffffff01a1949800000000001976a91434b09363474b14d02739a327fe76e6ea12deecad88ac00000000d1010000000000e379580dcfea3eb6944bfbe1de5fa2317932e260acce4d9ff3ede5f4287a34160100000000000000000000000000ffff2d4ce6ef4e1fd47babdb9092489c82426623299dde76b9c72d9799f20ed1538e28259ff80044982372519a2e6e4cdedb01c96f8f22e755b2b3124fbeebdf6de3587189cf44b3c6e7670ed1935246865dce1accce6c8691c8466bd67ebf1200001976a914fef33f56f709ba6b08d073932f925afedaa3700488acfdb281e134504145b5f8c7bd7b47fd241f3b7ea1f97ebf382249f601a0187f5300",
-    "collateralAddress": "yjSPYvgUiAQ9AFj5tKFA8thFLoLBUxQERb",
-    "signMessage": "yjZVt49WsQd6XSrPVAUGXtJccxviH9ZQpN|0|yfgxFhqrdDG15ZWKJAN6dQvn6dZdgBPAip|yfRaZN8c3Erpqj9iKnmQ9QDBeUuRhWV3Mg|ad5f82257bd00a5a1cb5da1a44a6eb8899cf096d3748d68b8ea6d6b10046a28e"
+    "collateralAddress": "GZRqhmJbCCJwpvREFHNht55Qix1Mpj56SQ",
+    "signMessage": "GJZqps5DCE9MgzXVtavAU5RBJxiFVYeGkZ|0|GXzhVPiC9StZnneXfZBnsCSRTKUKmgoHYd|GYXALgxRpyqyU2XHFtpMgQ1ySbghD4Av6M|ad5f82257bd00a5a1cb5da1a44a6eb8899cf096d3748d68b8ea6d6b10046a28e"
   }
 
 Next we will use the ``collateralAddress`` and ``signMessage`` fields to
@@ -655,7 +632,7 @@ function of a hardware wallet. The command takes the following syntax::
 
 Example::
 
-  signmessage yjSPYvgUiAQ9AFj5tKFA8thFLoLBUxQERb yjZVt49WsQd6XSrPVAUGXtJccxviH9ZQpN|0|yfgxFhqrdDG15ZWKJAN6dQvn6dZdgBPAip|yfRaZN8c3Erpqj9iKnmQ9QDBeUuRhWV3Mg|ad5f82257bd00a5a1cb5da1a44a6eb8899cf096d3748d68b8ea6d6b10046a28e
+  signmessage GZRqhmJbCCJwpvREFHNht55Qix1Mpj56SQ GJZqps5DCE9MgzXVtavAU5RBJxiFVYeGkZ|0|GXzhVPiC9StZnneXfZBnsCSRTKUKmgoHYd|GYXALgxRpyqyU2XHFtpMgQ1ySbghD4Av6M|ad5f82257bd00a5a1cb5da1a44a6eb8899cf096d3748d68b8ea6d6b10046a28e
 
 Output::
 
@@ -696,7 +673,7 @@ where the txid of the final ``protx register_submit`` transaction
 identifies your masternode.
 
 At this point you can go back to your terminal window and monitor your
-masternode by entering ``~/.Genixcore/Genix-cli masternode status`` or
+masternode by entering ``~/.genixcore/genix-cli masternode status`` or
 using the **Get status** function in DMT. 
 
 At this point you can safely log out of your server by typing ``exit``.
