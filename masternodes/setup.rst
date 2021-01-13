@@ -347,6 +347,10 @@ copy the necessary files to the directory::
   sudo apt-get install unzip
   mkdir ~/.genixcore
   unzip Ubuntu-1804-x64.zip 
+  chmod +x genixd
+  chmod +x genix-cli 
+  chmod +x genix-tx
+  rm genix-qt
   cp -f genixd ~/.genixcore/ 
   cp -f genix-cli ~/.genixcore/ 
 
